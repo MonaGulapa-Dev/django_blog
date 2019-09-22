@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+
+	 <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+
+ 	{% if title %}
+		<title>Everything Django - {{ title }}</title>
+	{% else %}
+		<title>Everything Django</title>
+	{% endif %}
+</head>
+<body>
+
+	<header class="site-header">
+	  <nav class="navbar navbar-expand-md navbar-dark bg-info fixed-top">
+	    <div class="container">
+			<a class="navbar-brand mr-4" href="/">Everything Django</a>
+			<!-- <span class="btn btn-outline-info" style="font-weight: 400; font-size: 12px; color: #ffffff">With Python of course 😊</span> -->
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	      </button>
+	      <div class="collapse navbar-collapse" id="navbarToggle">
+	        <div class="navbar-nav mr-auto">
+	          <!-- <a class="nav-item nav-link" href="/">Home</a>
+	          <a class="nav-item nav-link" href="/about">About</a> -->
+
+	          <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
+	          <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
+
+	        </div>
+	        <!-- Navbar Right Side -->
+	        <div class="navbar-nav">
+	        	{% if user.is_authenticated %}
+	        		<p class="btn btn-outline-info" style="font-weight: 600; color:#FFFFFF">Welcome {{ user }}</p>
+	        		<a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
+	        		<a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+	        		<a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+	        	{% else %}
+		          <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+		          <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+		        {% endif %}
+	        </div>
+	      </div>
+	    </div>
+	  </nav>
+	</header>
+
+	<main role="main" class="container">
+	  <div class="row">
+	    <div class="col-md-8">
+	    	{% if messages %}
+	    		{% for message in messages %}
+	    			<dir class="alert alert-{{ message.tags }}">
+	    				{{ message }}
+	    			</dir>
+	    		{% endfor %}
+	    	{% endif %}
+	      {% block content %}{% endblock %}
+
+	       </div>
+	    <div class="col-md-4">
+
+	    <div class="content-section">
+	    	<div>
+	    		<img class="img-fluid rounded" src="{% static 'blog/images/python-django-logo.jpg' %}"
+	    				alt='Python/django' >
+	    	</div>
+	    	<br>
+	        <div style="color: #0B6623; font-weight: 700;font-size: 120%">django</div>
+	        <div style="color: #0B6623">
+		        <p><small>Django is a Python-based free and open-source web framework, which follows the model-template-view architectural pattern.</small></p>
+
+				<p><small><strong><em>Fast Web Development,</em></strong> full of built-in features. Leverage on existing tools to save time and speed up your development process. Boost your productivity with Django's built-in functions, classes and it's full pack library of utilities for your different types of applications.</small></p>
+
+				<p><small>When it's been tried and tested, you don't have to reinvent the wheel. Unless, as reality shows, there's no perfect, 100% bullet proof system, when something needs to be updated / upgraded / rectified, then, you have to adjust depending on your requirements. The possibility is infinite.
+		        </small></p>
+	      </div>
+	      <div style="color: #306998; font-weight: 700;font-size: 120%">Python</div>
+	        <div style="color: #306998">
+		        <p><small>As defined by its organization (https://www.python.org) is an interpreted, object-oriented, high-level programming language with dynamic semantics. Its high-level built in data structures, combined with dynamic typing and dynamic binding, make it<strong><em> very attractive for Rapid Application Development,</em></strong> as well as for use as a scripting or glue language to connect existing components together.</small></p>
+	      </div>
+	    </div>
+	  </div>
+	</main>
+
+
+	 <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+ --><script type="text/javascript">
+		$(document).ready(function(){
+			var maxLength = 300;
+			$(".show-read-more").each(function(){
+				var myStr = $(this).text();
+				if($.trim(myStr).length > maxLength){
+					var newStr = myStr.substring(0, maxLength);
+					var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
+					$(this).empty().html(newStr);
+					$(this).append(' <a href="javascript:void(0);" class="read-more">Continue Reading .......</a>');
+					$(this).append('<span class="more-text">' + removedStr + '</span>');
+				}
+			});
+			$(".read-more").click(function(){
+				$(this).siblings(".more-text").contents().unwrap();
+				$(this).remove();
+			});
+		});
+	</script>
+	<style type="text/css">
+	    .show-read-more .more-text{
+	        display: none;
+	    }
+	</style>
+
+
+
+</body>
+</html>
